@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Lista de Cursos</h2>
+
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Nombre del Curso</th>
+      <th>Descripción</th>
+      <th>Salón</th>
+      <th>Duración (Semanas)</th>
+      <th>Costo</th>
+      <th>Fecha de inicio</th>
+      <th>Cupo Máximo</th>
+      <th>Instructor</th> <!-- 👈 Nueva columna -->
+      <th>Acciones</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for c in cursos %}
+    <tr>
+      <td>{{ c.curso_id }}</td>
+      <td>{{ c.nombre_curso }}</td>
+      <td>{{ c.descripcion }}</td>
+      <td>{{ c.salon_num }}</td>
+      <td>{{ c.duracion_semanas }}</td>
+      <td>{{ c.costo }}</td>
+      <td>{{ c.fecha_inicio }}</td>
+      <td>{{ c.cupo_maximo }}</td>
+      <td>
+        {% if c.instructor %}
+          {{ c.instructor.nombre }} {{ c.instructor.apellido }}
+        {% else %}
+          <em>Sin instructor</em>
+        {% endif %}
+      </td>
+      <td>
+        <a href="{% url 'actualizar_curso' c.curso_id %}" class="btn btn-warning btn-sm">Editar</a>
+        <a href="{% url 'borrar_curso' c.curso_id %}" class="btn btn-danger btn-sm">Borrar</a>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+{% endblock %}

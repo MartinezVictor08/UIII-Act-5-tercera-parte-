@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Actualizar Curso</h2>
+<form method="POST" action="{% url 'realizar_actualizacion_curso' curso.curso_id %}">
+  {% csrf_token %}
+  <input type="text" name="nombre_curso" value="{{ curso.nombre_curso }}" class="form-control mb-2">
+  <textarea name="descripcion" class="form-control mb-2">{{ curso.descripcion }}</textarea>
+  <input type="number" name="salon_num" value="{{ curso.salon_num }}" class="form-control mb-2">
+  <input type="number" name="duracion_semanas" value="{{ curso.duracion_semanas }}" class="form-control mb-2">
+  <input type="text" name="costo" value="{{ curso.costo }}" class="form-control mb-2">
+  <input type="date" name="fecha_inicio" value="{{ curso.fecha_inicio }}" class="form-control mb-2">
+  <input type="number" name="cupo_maximo" value="{{ curso.cupo_maximo }}" class="form-control mb-2">
+
+  <label for="instructor">Instructor:</label>
+  <select name="instructor" class="form-select mb-2">
+    <option value="">-- Selecciona un instructor --</option>
+    {% for ins in instructores %}
+      <option value="{{ ins.id }}" {% if curso.instructor and ins.id == curso.instructor.id %}selected{% endif %}>
+        {{ ins.nombre }} {{ ins.apellido }}
+      </option>
+    {% endfor %}
+  </select>
+
+  <button type="submit" class="btn btn-primary">Actualizar</button>
+</form>
+{% endblock %}
